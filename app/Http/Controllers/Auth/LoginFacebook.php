@@ -55,8 +55,10 @@ class LoginFacebook extends Controller
         $user = User::where('email', '=', $data->email)->first();
 
         if ($user) {
+            $roles = $user->roles()->select('role', 'name')->get();
             $token = $this->JWTSign($user->id);
-            return $this->responses(['user' => $user, 'token' => $token]);
+            $array = array_merge($user->toArray(), ['token' => $token, 'roles' => $roles]);
+            return $this->responses($array);
         }
         
         $userfb = array(
@@ -66,9 +68,10 @@ class LoginFacebook extends Controller
             'foto' => $data->picture->data->url,
         );
 
-        $user = User::create($userfb);
+        $user = User::create($userfb)->roles()->attach(2);
+        $roles = $user->roles()->select('role', 'name')->get();
         $token = $this->JWTSign($user->id);
-
-        return $this->responses(['user' => $user, 'token' => $token]);
+        $array = array_merge($user->toArray(), ['token' => $token, 'roles' => $roles]);
+        return $this->responses($array);
     }
 }

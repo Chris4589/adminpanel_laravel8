@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['update', 'destroy']);
+        $this->middleware('roles')->only(['update', 'destroy']);
+        $this->middleware('user_id')->only(['update', 'destroy']);
+    }
     /**
      * Update the specified resource in storage.
      *

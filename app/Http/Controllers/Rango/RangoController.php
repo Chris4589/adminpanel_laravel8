@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class RangoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['index', 'update', 'destroy']);
+        $this->middleware('roles')->only(['index', 'update', 'destroy']);
+        $this->middleware('user_id')->only(['index', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

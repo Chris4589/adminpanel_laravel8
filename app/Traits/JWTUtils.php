@@ -16,10 +16,10 @@ trait JWTUtils {
 
   public function JWTVerifity($token) {
     try {
-      $decoded = JWT::decode($token, $this->key, array('HS256'));
-      return $decoded->id;
+      $token = JWT::decode($token, $this->key, array('HS256'));
+      return $token;
     } catch (\UnexpectedValueException $th) {
-      return 'Token invalido';
+      return false;
     }
   }
 

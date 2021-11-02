@@ -9,15 +9,12 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    /* 
-    protected $fillable = [
-        'username',
-        'email',
-        'password',
-        'role',
-        'foto',
-    ]; 
-    */
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['index', 'show', 'update', 'destroy']);
+        $this->middleware('roles')->only(['index', 'show', 'update', 'destroy']);
+        $this->middleware('user_id')->only(['index', 'show', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

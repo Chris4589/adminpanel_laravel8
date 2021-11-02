@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['store', 'index', 'show', 'update', 'destroy']);
+        $this->middleware('roles')->only(['store', 'index', 'show', 'update', 'destroy']);
+        $this->middleware('user_id')->only(['store', 'index', 'show', 'update', 'destroy']);
+    }
     /**
      * Display a listing of the resource.
      *

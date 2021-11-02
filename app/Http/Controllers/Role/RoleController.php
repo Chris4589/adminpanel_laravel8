@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['edit', 'create', 'destroy', 'store']);
+        $this->middleware('roles')->only(['edit', 'create', 'destroy', 'store']);
+        $this->middleware('user_id')->only(['edit', 'create', 'destroy', 'store']);
+    }
     /**
      * Display a listing of the resource.
      *

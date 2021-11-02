@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class UserAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt')->only(['index']);
+        $this->middleware('roles')->only(['index']);
+        $this->middleware('user_id')->only(['index']);
+    }
     /**
      * Display a listing of the resource.
      *

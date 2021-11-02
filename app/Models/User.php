@@ -12,6 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    const USER_ROLE = 'ADMIN_ROLE';
+
     public $timestamps = false;//para no tener timestamps
 
     /**
