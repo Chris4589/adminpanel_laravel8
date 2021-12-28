@@ -13,7 +13,7 @@ class UserAdminController extends Controller
     public function __construct()
     {
         $this->middleware('jwt')->only(['index']);
-        $this->middleware('roles')->only(['index']);
+        /* $this->middleware('roles')->only(['index']); */
         $this->middleware('user_id')->only(['index']);
     }
     /**
@@ -28,7 +28,7 @@ class UserAdminController extends Controller
                 ->where('id', $server->id)
                 ->first()
                 ->admins()
-                ->get();
+                ->get(); 
 
         return $this->responses($admin);
     }

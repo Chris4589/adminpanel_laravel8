@@ -1,29 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Server;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class UserServerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt')->only(['index', 'show', 'update', 'destroy']);
-        $this->middleware('roles')->only(['index', 'show', 'update', 'destroy']);
-        $this->middleware('user_id')->only(['index', 'show', 'update', 'destroy']);
+        $this->middleware('jwt')->only(['index']);
+        $this->middleware('user_id')->only(['index']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        $user = User::all();
-        return $this->responses($user);
+        $servers = $user->servers()->get();
+
+        return $this->responses($servers);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -34,24 +43,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'username' => 'required|min:5',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:5',
-        ];
-        
-        $this->validate($request, $rules);
-
-        $data = $request->all();
-
-        $data['password'] = bcrypt($request->password);
-        $data['foto'] = 'https://i.imgur.com/fnWHQPW.png';
-
-        $user = User::create($data)/* ->roles()->attach(2) */;
-
-        $user->roles()->attach(2);
-        
-        return $this->responses($user);
+        //
     }
 
     /**
@@ -62,7 +54,18 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->responses($user);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        //
     }
 
     /**
@@ -86,7 +89,5 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
-        $user->delete();
-        return $this->responses($user);
     }
 }

@@ -13,7 +13,7 @@ class ServerRangoAdminController extends Controller
     public function __construct()
     {
         $this->middleware('jwt')->only(['store']);
-        $this->middleware('roles')->only(['store']);
+        /* $this->middleware('roles')->only(['store']); */
         $this->middleware('user_id')->only(['store']);
     }
     /**

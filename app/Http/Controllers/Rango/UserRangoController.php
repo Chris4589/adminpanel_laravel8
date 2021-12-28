@@ -12,7 +12,7 @@ class UserRangoController extends Controller
     public function __construct()
     {
         $this->middleware('jwt')->only(['store', 'index']);
-        $this->middleware('roles')->only(['store', 'index']);
+        /* $this->middleware('roles')->only(['store', 'index']); */
         $this->middleware('user_id')->only(['store', 'index']);
     }
     /**
