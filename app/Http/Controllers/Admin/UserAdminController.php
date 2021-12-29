@@ -25,6 +25,7 @@ class UserAdminController extends Controller
     public function index(Request $request, User $user, Server $server)
     {
         $date = intval($request->query('date', 0));
+        $per_page = intval($request->per_page, 10);
 
         if ($date) {
             $hoy = Carbon::today();
@@ -46,7 +47,7 @@ class UserAdminController extends Controller
                 ->where('id', $server->id)
                 ->first()
                 ->admins()
-                ->get(); 
+                ->paginate($per_page); 
 
         return $this->responses($admin);
     }

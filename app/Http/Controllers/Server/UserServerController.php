@@ -18,7 +18,7 @@ class UserServerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index(Request $request, User $user)
     {
         $servers = $user->servers()->get();
 

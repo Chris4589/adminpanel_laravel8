@@ -3,5 +3,5 @@
 * PHP 8
 * JWT
 * Eloquent MySQL
-* Docker - pendiente
+* Docker
 * Factories - Seeders

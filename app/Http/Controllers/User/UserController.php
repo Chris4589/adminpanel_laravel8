@@ -20,9 +20,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::all();
+        $per_page = intval($request->per_page, 10);
+
+        $user = User::paginate($per_page);
+        //$user = User::all();
         return $this->responses($user);
     }
 
