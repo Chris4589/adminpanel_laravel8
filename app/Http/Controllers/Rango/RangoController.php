@@ -11,7 +11,7 @@ class RangoController extends Controller
     public function __construct()
     {
         $this->middleware('jwt')->only(['index', 'update', 'destroy']);
-        $this->middleware('roles')->only(['index', 'update', 'destroy']);
+        $this->middleware('roles')->only(['index']);
         $this->middleware('user_id')->only(['index', 'update', 'destroy']);
     }
     /**
@@ -56,6 +56,7 @@ class RangoController extends Controller
      */
     public function destroy(Rango $rango)
     {
+        /* $rango->user()->detach(); */
         $rango->delete();
         return $this->responses($rango);
     }

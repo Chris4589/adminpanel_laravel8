@@ -26,7 +26,7 @@ class Admin extends Model
     protected $hidden = ['pivot'];
 
     public function rango() {
-        return $this->belongsTo(Rango::class);
+        return $this->belongsTo(Rango::class, 'fk_rango');
     }
 
     public function server() {

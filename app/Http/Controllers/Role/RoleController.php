@@ -10,9 +10,9 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt')->only(['edit', 'create', 'destroy', 'store']);
-        $this->middleware('roles')->only(['edit', 'create', 'destroy', 'store']);
-        $this->middleware('user_id')->only(['edit', 'create', 'destroy', 'store']);
+        $this->middleware('jwt')->only(['update', 'index', 'show']);
+        $this->middleware('roles')->only(['index']);
+        $this->middleware('user_id')->only(['update', 'index', 'show']);
     }
     /**
      * Display a listing of the resource.

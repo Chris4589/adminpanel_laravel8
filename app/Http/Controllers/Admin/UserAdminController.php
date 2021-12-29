@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Server;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserAdminController extends Controller
@@ -21,8 +22,25 @@ class UserAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user, Server $server)
+    public function index(Request $request, User $user, Server $server)
     {
+        $date = intval($request->query('date', 0));
+
+        if ($date) {
+            $hoy = Carbon::today();
+
+            $admin = $user
+                ->servers()
+                ->where('id', '=', $server->id)
+                ->first()
+                ->admins()->with(['rango' => function($query){
+                    $query->select(['id', 'name', 'flags']);
+                }])
+                ->where('date', '>=', $hoy)->get();
+
+            return $this->responses($admin);
+        }
+
         $admin = $user
                 ->servers()
                 ->where('id', $server->id)

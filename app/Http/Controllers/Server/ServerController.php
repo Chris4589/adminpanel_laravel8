@@ -12,7 +12,7 @@ class ServerController extends Controller
     public function __construct()
     {
         $this->middleware('jwt')->only(['store', 'index', 'show', 'update', 'destroy']);
-        $this->middleware('roles')->only(['index', 'show', 'update', 'destroy']);
+        $this->middleware('roles')->only(['update']);
         $this->middleware('user_id')->only(['store', 'index', 'show', 'update', 'destroy']);
     }
     /**
@@ -23,8 +23,11 @@ class ServerController extends Controller
     public function index(Request $request)
     {
         //
-        $servers = Server::all();
-        return $this->responses($servers);
+        $id = intval($request->query('user_id', 0));
+        $ip = $request->query('ip', 0);
+
+        $server = User::where('id', $id)->first()->servers()->get()->where('ip', $ip)->first();
+        return $this->responses($server);
     }
 
     /**
@@ -51,7 +54,7 @@ class ServerController extends Controller
 
         $user = User::findOrFail($id);
 
-        $data['foto'] = 'https://i.pinimg.com/originals/4f/df/1d/4fdf1dd0faee0def3ee84a7fa34e96cc.jpgs';
+        $data['foto'] = 'https://i.pinimg.com/originals/4f/df/1d/4fdf1dd0faee0def3ee84a7fa34e96cc.jpg';
 
         $newServer = Server::create($data);
 
@@ -103,6 +106,7 @@ class ServerController extends Controller
      */
     public function destroy(Server $server)
     {
+        $server->users()->detach();
         $server->delete();
         return $this->responses($server);
     }

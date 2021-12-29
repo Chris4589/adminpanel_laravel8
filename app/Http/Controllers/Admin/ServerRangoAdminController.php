@@ -27,7 +27,7 @@ class ServerRangoAdminController extends Controller
         $rules = [
             'steamid' => 'required|min:2',
             'name' => 'required|min:2',
-            'type' => 'required|integer|min:1',
+            'type' => 'required|integer|min:0',
             'password' => 'required|min:4',
             'date' => 'required|date',
         ];
